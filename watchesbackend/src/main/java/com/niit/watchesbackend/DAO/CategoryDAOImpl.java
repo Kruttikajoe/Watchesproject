@@ -59,14 +59,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 			return false;
 		}
 		
-		/*Session s = sessionFactory.getCurrentSession();
-		Transaction tx = s.beginTransaction();
-		s.createQuery("delete from Category where categoryid=1").executeUpdate();
-		return true;*/
+		
 	} 
+	
+	@Override
 
 	public Category get(int id) {
-		String hql=" from Category where catogoryid="+id;
+		String hql=" from Category where categoryid="+id;
 		Session s = sessionFactory.getCurrentSession();
 		Transaction tx = s.beginTransaction();
 		Query query=s.createQuery(hql);
@@ -83,6 +82,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 		}
 		
 	}
+	
+	@Override
 	@Transactional
 	public List<Category> list() {
 		Session s=sessionFactory.openSession();
