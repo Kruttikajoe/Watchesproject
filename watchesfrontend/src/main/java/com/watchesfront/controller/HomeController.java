@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.niit.watchesbackend.DAO.CategoryDAO;
 import com.niit.watchesbackend.model.Category;
 
+
+
 @Controller
 
 public class HomeController {
@@ -57,29 +59,6 @@ public class HomeController {
 	}
 	
 	
-	
-	@Autowired
-	
-	private CategoryDAO categoryDAO;
-	
-	@Autowired
-	
-	private Category category;
-	
-	@RequestMapping("/AddCategory")
-	public ModelAndView showCategory()
-	{
-		ModelAndView mv= new ModelAndView("AddCategory");
-		mv.addObject("categoryList", categoryDAO.list());
-		return mv;
-	}
-	
-	@RequestMapping("/AddSupplier")
-	public ModelAndView showSupplier()
-	{
-		ModelAndView mv= new ModelAndView("AddSupplier");
-		return mv;
-	}
 	
 
 }

@@ -1,4 +1,4 @@
-<%@include file="Admin.jsp" %>
+<%@include file="Admin.jsp"%>
 
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-sm-5">
 
-				<form:form method="POST" action="addcat" modelAttribute="category"> >
+				<form:form method="POST" action="addcat" modelAttribute="category">
 
 					<table style="width: 300px; height: 200px; cellpadding: 20px;">
 						<c:if test="${!empty category.categoryname}">
@@ -20,9 +20,8 @@
 										disabled="true" /> <form:hidden path="categoryid" /></td>
 							</tr>
 						</c:if>
-
 						<tr>
-							<td><form:label path="categoryname">Category-Name:</form:label></td>
+							<td><form:label path="categoryname">Category Name:</form:label></td>
 							<td><form:input path="categoryname" /></td>
 						</tr>
 						<tr>
@@ -36,8 +35,8 @@
 								<td><input type="reset" value="Cancel"
 									style="color: red; font-size: 13pt" /></td>
 							</c:if>
-
-							<td colspan="2"><c:if test="${!empty category.categoryname}">
+							<td colspan="2"><c:if
+									test="${!empty category.categoryname}">
 									<input type="submit" value="Edit category" />
 								</c:if></td>
 						</tr>
@@ -45,11 +44,9 @@
 				</form:form>
 			</div>
 		</div>
-</div>
-</center>
+	</div>
 
-	<br>
-	<br>
+	<br> <br>
 
 	<h2>Category List</h2>
 	<c:if test="${!empty categoryList}">
@@ -68,12 +65,13 @@
 					<td>${category.categoryid}</td>
 					<td>${category.categoryname}</td>
 					<td>${category.cdescription}</td>
-					<td><a href="<c:url value='editcategory${category.categoryid}'/>">Edit</a></td>
+					<td><a
+						href="<c:url value='editcategory${category.categoryid}'/>">Edit</a></td>
 					<td><a
 						href="<c:url value='deletecategory${category.categoryid}'/>">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
-
-	<a href="Admin">Back</a>
+</center>
+<a href="Admin">Back</a>
