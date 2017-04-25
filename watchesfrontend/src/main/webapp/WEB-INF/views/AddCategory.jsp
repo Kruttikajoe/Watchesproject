@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-sm-5">
 
-				<form:form method="POST" action="addcat" commandName="category">
+				<form:form method="POST" action="addcat" modelAttribute="category"> >
 
 					<table style="width: 300px; height: 200px; cellpadding: 20px;">
 						<c:if test="${!empty category.categoryname}">
@@ -46,6 +46,7 @@
 			</div>
 		</div>
 </div>
+</center>
 
 	<br>
 	<br>

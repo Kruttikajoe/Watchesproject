@@ -33,7 +33,6 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="#">Products</a></li>
-        <li><a href="AddCategory">Categories</a></li>
         <li><a href="#">Today's deals</a></li>
         <li><a href="#">Customer Service</a></li>
         <li><a href="#">About us</a></li>

@@ -1,9 +1,13 @@
 package com.watchesfront.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.niit.watchesbackend.DAO.CategoryDAO;
+import com.niit.watchesbackend.model.Category;
 
 @Controller
 
@@ -52,10 +56,21 @@ public class HomeController {
 		return mv;
 	}
 	
+	
+	
+	@Autowired
+	
+	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	
+	private Category category;
+	
 	@RequestMapping("/AddCategory")
 	public ModelAndView showCategory()
 	{
 		ModelAndView mv= new ModelAndView("AddCategory");
+		mv.addObject("categoryList", categoryDAO.list());
 		return mv;
 	}
 	
