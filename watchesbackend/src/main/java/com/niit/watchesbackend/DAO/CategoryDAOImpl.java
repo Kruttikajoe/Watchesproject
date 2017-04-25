@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.niit.watchesbackend.model.Category;
 
 @Repository(value="categoryDAO")
@@ -81,9 +83,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 		}
 		
 	}
-
+	@Transactional
 	public List<Category> list() {
-		Session s=sessionFactory.getCurrentSession();
+		Session s=sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		String hql="from Category";
 		Query query=s.createQuery(hql);
