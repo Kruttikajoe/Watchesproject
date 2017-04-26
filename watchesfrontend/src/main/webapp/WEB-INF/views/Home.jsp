@@ -7,24 +7,26 @@
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
       <li data-target="#myCarousel" data-slide-to="3"></li>
+      
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img src="images/1.jpg" alt="Watch1" width="460" height="345">
+        <img src="images/11.jpg" alt="Watch1" width="460" height="345">
       </div>
 
       <div class="item">
-        <img src="images/2.jpg" alt="Watch2" width="460" height="345">
+        <img src="images/7.jpg" alt="Watch2" width="460" height="345">
       </div>
     
       <div class="item">
-        <img src="images/3.jpg" alt="Watch3" width="460" height="345">
+        <img src="images/2.jpg" alt="Watch3" width="460" height="345">
       </div>
 
       <div class="item">
         <img src="images/5.jpg" alt="Watch5" width="460" height="345">
+       
 
       </div>
 
