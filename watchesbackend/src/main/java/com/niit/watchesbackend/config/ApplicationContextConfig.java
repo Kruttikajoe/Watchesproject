@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.watchesbackend.DAO.CategoryDAO;
 import com.niit.watchesbackend.DAO.CategoryDAOImpl;
+import com.niit.watchesbackend.DAO.ProductDAO;
+import com.niit.watchesbackend.DAO.ProductDAOImpl;
 import com.niit.watchesbackend.DAO.SupplierDAO;
 import com.niit.watchesbackend.DAO.SupplierDAOImpl;
 import com.niit.watchesbackend.DAO.UserDAO;
@@ -130,6 +132,24 @@ public Category getCategory()
 {
 	System.out.println("Category");
 	return new Category();
+}
+
+@Autowired
+@Bean(name="productDAO")
+
+public ProductDAO getProductDAO(SessionFactory sessionFactory)
+{
+	System.out.println("product DAO");
+	return new ProductDAOImpl();
+}
+
+@Autowired
+@Bean(name="product")
+
+public Product getProduct()
+{
+	System.out.println("Product");
+	return new Product();
 }
 
 }
