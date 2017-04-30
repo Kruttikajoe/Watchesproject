@@ -82,8 +82,8 @@
 				<!--  select:dropdown, items:collection ,itemValue: name to item-->
 				<tr>
 					<td>Category</td>
-					<td><form:select path="categoryname" items="${categoryList}"
-							itemValue="categoryname" itemLabel="categoryname">
+					<td><form:select path="categoryid" items="${categoryList}"
+							itemValue="categoryid" itemLabel="categoryid">
 						</form:select></td>
 				</tr>
 
