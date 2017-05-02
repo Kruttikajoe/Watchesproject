@@ -14,7 +14,7 @@
           <h4 class="modal-title">Login</h4>
         </div>
         <div class="modal-body">       
-<form action="validate">
+<form action="perform_login" method="POST">
 <table>
 <tr>
 <td><label for="username">Username:</label></td>

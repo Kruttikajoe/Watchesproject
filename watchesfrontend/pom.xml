@@ -20,12 +20,14 @@
     <artifactId>javaee-api</artifactId>
     <version>7.0</version>
 </dependency>
+<!-- Dependency for jstl tags -->
 		
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!-- Spring dependencies -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -46,6 +48,8 @@
 		</dependency>
 		<dependency>
 		
+		<!-- Backend Dependency -->
+		
 	<groupId>com.niit</groupId>
 	<artifactId>watchesbackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -56,6 +60,36 @@
     <artifactId>commons-logging</artifactId>
     <version>1.2</version>
 </dependency>
+
+<!-- Security Dependencies -->
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-core</artifactId>
+    <version>4.1.2.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-config</artifactId>
+    <version>4.1.2.RELEASE</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-web</artifactId>
+    <version>4.1.2.RELEASE</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-taglibs</artifactId>
+    <version>4.1.2.RELEASE</version>
+</dependency>
+
+
 		
 	</dependencies>
 	<build>
