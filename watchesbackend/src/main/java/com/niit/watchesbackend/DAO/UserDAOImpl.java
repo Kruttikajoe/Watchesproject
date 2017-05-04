@@ -1,7 +1,9 @@
 package com.niit.watchesbackend.DAO;
 
 import com.niit.watchesbackend.model.User;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -46,5 +48,21 @@ public class UserDAOImpl implements UserDAO {
 		tx.commit();
 		return true;
 	}
+
+	//@Override
+	public User get(String id) {
+		Session s=sessionFactory.getCurrentSession();
+		Transaction tx=s.beginTransaction();
+		String str="from User where emailid='"+id+"'";
+		Query query=sessionFactory.getCurrentSession().createQuery(str);
+		List<User> list=query.list();
+		if(list!=null && list.isEmpty())
+		{
+			tx.commit();
+		}
+		return list.get(0);
+	}
+	
+	
 
 }
