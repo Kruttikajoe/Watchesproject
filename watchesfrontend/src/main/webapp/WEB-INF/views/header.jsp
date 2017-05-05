@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
   <title>Watch Hunt</title>
@@ -39,10 +38,37 @@
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
+      <c:choose><c:when test="${empty loggedInUser}">
         <li><a href="Signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li><a href="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </c:when>
+        <c:when test="${not empty loggedInUser }">
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicons glyphicons-user">My Account</span> </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">My Orders</a></li>
+          <li><a href="perform_logout">Sign out</a></li>
+        </ul>
+        </li>
+        
+        <li> <a href="#"><span class="glyphicon glyphicon-shopping-cart">Cart</span></a>
+        </li>
+        
+        
+        </c:when>
+        
+        </c:choose>
+        
         
       </ul>
     </div>
+    <c:choose>
+    <c:when test="${loggedOut==true }">
+    <li class="navbar-text" style="font-size=150%;">${logoutMessage}</li>
+    </c:when>
+    
+    </c:choose>
   </div>
 </nav>
