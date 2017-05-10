@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,20 +14,28 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.niit.watchesbackend.DAO.CartDAO;
+import com.niit.watchesbackend.DAO.CartItemDAO;
 import com.niit.watchesbackend.DAO.CategoryDAO;
 import com.niit.watchesbackend.DAO.ProductDAO;
 import com.niit.watchesbackend.DAO.SupplierDAO;
+import com.niit.watchesbackend.DAO.UserDAO;
+import com.niit.watchesbackend.model.Cart;
+import com.niit.watchesbackend.model.CartItem;
 import com.niit.watchesbackend.model.Category;
 import com.niit.watchesbackend.model.Product;
 import com.niit.watchesbackend.model.Supplier;
+import com.niit.watchesbackend.model.User;
 
 @Controller
 
@@ -54,6 +64,22 @@ public class ProductController {
 	@Autowired
 
 	private Category category;
+	
+	@Autowired
+	
+	private UserDAO userDAO;
+	
+	@Autowired
+	
+	private CartItemDAO cartItemDAO;
+	
+	@Autowired
+	
+	private CartDAO cartDAO;
+	
+	@Autowired
+	
+	HttpSession session;
 
 	@ModelAttribute
 
@@ -138,5 +164,78 @@ public class ProductController {
 		mv.addObject("AddProducts", 0);
 		return mv;
 	}
+	
+	@RequestMapping("/Products")
+	public String showDetails(Model mp)
+	{
+		return "Products";
+	}
+
+	/*@RequestMapping("/catproducts")
+	public @ResponseBody List<Product> allProducts(@PathVariable int id)
+	{
+		
+		return productDAO.getCatProducts(id);
+	}*/
+	
+	@RequestMapping("/{id}/viewDetails")
+	public String showDetails(@PathVariable Integer id,ModelMap model)
+	{
+		
+model.addAttribute("product",productDAO.get(id));
+		
+		
+		return "viewDetails";
+
+	}
+	
+	@RequestMapping("/allproducts")
+	public @ResponseBody List<Product> productsall() {
+		System.out.println("inside products all");
+		return productDAO.list();
+
+	}
+
+	@RequestMapping("/{id}/addcart")
+	public String addCart(@PathVariable Integer id,Principal principal)
+	{
+		Integer categoryid=0;
+		if(principal!=null)
+		{
+		 User user=userDAO.get(principal.getName());
+		Cart cart= user.getCart();
+		CartItem cartItem =cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
+		System.out.println("cartItem item"+cartItem);
+		Product product=productDAO.get(id);
+		if(cartItem==null)
+		{
+		  cartItem=new CartItem();
+		  cartItem.setQty(1);;
+		  cartItem.setProduct(product);;
+		  cartItem.setGrandtotal(product.getPrice());
+		  cartItem.setCart(cart);
+		  cartItemDAO.addCartItem(cartItem);
+		  cart.setGrandtotal(cart.getGrandtotal()+product.getPrice());
+		  cart.setQty(cart.getQty()+1);
+		  cartDAO.updateCart(cart);
+		}else
+		{
+			cartItem.setQty(cartItem.getQty()+1);
+			cartItem.setGrandtotal(cartItem.getGrandtotal()+product.getPrice());
+			cart.setGrandtotal(cart.getGrandtotal()+product.getPrice());
+			cart.setQty(cart.getQty()+1);
+			  
+			  
+			  cartDAO.updateCart(cart);
+			  cartItemDAO.updateCartItem(cartItem);
+		}
+		
+		 session.setAttribute("cartcount",cart.getQty());  
+		}
+		
+		return "redirect:/Products";
+	}
 
 }
+
+
