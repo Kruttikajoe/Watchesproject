@@ -6,7 +6,7 @@
 		<div class="col-sm-6">
 			<div class="col-sm-6">
 				<div class="thumbnail">
-					<img src="" alt="product image">
+					<img src="/watchesfrontend/images/${product.prodname}.jpg" alt="product image">
 
 				</div>
 
@@ -28,7 +28,7 @@
 					</tr>
 
 	<tr>
-	<td><a href="${contextPath}/${product.prodid}/addcart"><input type ="submit" value="AddtoCart"/></a></td>
+	<td><a href="addcart"><input type ="submit" value="AddtoCart"/></a></td>
 	</tr>
 
 

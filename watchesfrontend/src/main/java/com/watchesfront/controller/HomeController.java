@@ -10,7 +10,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -126,16 +129,34 @@ public class HomeController {
 		return mv;
 	}
 	
-	/*@RequestMapping("/Logout")
-	public ModelAndView showLogout1(HttpServletRequest request,HttpSession session)
+	@ModelAttribute
+	public User returnObject()
 	{
-		ModelAndView mv=new ModelAndView("Logout");
-		mv.addObject("loggedout","user");
-		session.invalidate();
-		
-		return mv;
-	}*/
-	
+		return new User(); 
+	}
+	 //After clicking submit this page with data is opened and is sent to addus page
+	@RequestMapping(value = "/addus", method = RequestMethod.POST)
+	public String addUser(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
+
+	{
+
+		System.out.print(user.getCpassword());
+		System.out.println(user.getPassword());
+
+		user.setEnabled("true");
+		user.setRole("ROLE_USER");
+
+		if (user.getCpassword().equals(user.getPassword()));
+
+		{
+
+			userDAO.saveorUpdate(user);
+
+		}
+
+		return "Login";
+
+	}
 	
 	
 

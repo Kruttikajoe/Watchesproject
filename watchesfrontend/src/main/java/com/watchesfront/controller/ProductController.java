@@ -178,14 +178,14 @@ public class ProductController {
 		return productDAO.getCatProducts(id);
 	}*/
 	
-	@RequestMapping("/{id}/viewDetails")
+	@RequestMapping("/{id}/ViewDetails")
 	public String showDetails(@PathVariable Integer id,ModelMap model)
 	{
 		
 model.addAttribute("product",productDAO.get(id));
 		
 		
-		return "viewDetails";
+		return "ViewDetails";
 
 	}
 	
@@ -203,7 +203,9 @@ model.addAttribute("product",productDAO.get(id));
 		if(principal!=null)
 		{
 		 User user=userDAO.get(principal.getName());
+		 System.out.println(principal.getName());
 		Cart cart= user.getCart();
+		System.out.println(cart.getCartid());
 		CartItem cartItem =cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
 		System.out.println("cartItem item"+cartItem);
 		Product product=productDAO.get(id);

@@ -3,7 +3,7 @@
 <script>
 
 $(document).ready(function(){
-	 var path="http://localhost:8091/Watches/images/";
+	 var path="http://localhost:8092/Watches/images/";
 	 
  $("#producttable").DataTable({
 	
@@ -32,12 +32,12 @@ $(document).ready(function(){
        	  "render":function(data,type,row){
        		  return "<a href='http://localhost:8092/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
        	  }
-         },
+         /* },
        	
         {"data":"",
        	  "render":function(data,type,row){
        		  return "<a href='http://localhost:8092/watchesfrontend/"+row.prodid+"/addcart' class='btn btn-primary'>Add to cart</a>";
-       	  }
+       	  } */
          }  
                    
      ]
