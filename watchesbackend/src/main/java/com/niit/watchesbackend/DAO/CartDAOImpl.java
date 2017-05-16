@@ -71,8 +71,12 @@ public class CartDAOImpl implements CartDAO {
 
 	@Override
 	public Cart getCart(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s=sessionFactory.openSession();
+		Transaction tx= s.beginTransaction();
+		Query query=s.createQuery("from Cart where cartid=:id");
+		query.setParameter("id", id);
+		tx.commit();
+		return (Cart) query.uniqueResult();
 	}
 
 }

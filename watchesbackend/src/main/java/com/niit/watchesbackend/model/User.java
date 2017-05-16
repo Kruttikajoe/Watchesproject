@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class User {
 	private String username;
 	@NotNull(message = "password cannot be blank")
 	private String password;
+	
+
 	@NotNull(message = "address cannot be blank")
 	private String address;
 	@NotNull(message = "emailid cannot be blank")
@@ -32,9 +35,21 @@ public class User {
 	@NotNull(message = "role cannot be blank")
 	private String role;
 	private String enabled;
+	@Transient 
+	@NotNull(message = "confirm password cannot be blank")
+	private String cpassword;
 	
 	@OneToOne(cascade= CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
 	private Cart cart;
+	
+	public String getCpassword() {
+		return cpassword;
+	}
+
+	public void setCpassword(String cpassword) {
+		this.cpassword = cpassword;
+	}
+	
 
 	public Cart getCart() {
 		return cart;
