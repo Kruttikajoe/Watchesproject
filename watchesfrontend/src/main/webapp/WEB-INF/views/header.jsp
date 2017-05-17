@@ -71,7 +71,7 @@
     <li class="navbar-text" style="font-size:150%;">Welcome ${loggedInUser}!</li>
      <div class="media" style="float:left;">
    <!--  <div class="media-left media-top"> -->
-      <img src="images/9.jpg" class="media-object" style="width:80px">
+      <img src="/watchesfrontend/images/9.jpg" class="media-object" style="width:80px">
     <!-- </div> -->
    </div>
     </c:when>

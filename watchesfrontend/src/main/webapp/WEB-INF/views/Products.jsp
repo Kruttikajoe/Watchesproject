@@ -3,12 +3,12 @@
 <script>
 
 $(document).ready(function(){
-	 var path="http://localhost:8092/Watches/images/";
+	 var path="http://localhost:8098/Watches/images/";
 	 
  $("#producttable").DataTable({
 	
 	  "ajax": {
-		    "url": "http://localhost:8092/watchesfrontend/allproducts",
+		    "url": "http://localhost:8098/watchesfrontend/allproducts",
 		    "dataSrc": ""
 		  },
 	  "columns": [
@@ -30,7 +30,7 @@ $(document).ready(function(){
          
          {"data":"prodid",
        	  "render":function(data,type,row){
-       		  return "<a href='http://localhost:8092/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
+       		  return "<a href='http://localhost:8098/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
        	  }
          /* },
        	

@@ -47,6 +47,10 @@ public class ProductController {
 
 	@Autowired
 
+	private Cart cart;
+
+	@Autowired
+
 	private Product product;
 
 	@Autowired
@@ -64,21 +68,21 @@ public class ProductController {
 	@Autowired
 
 	private Category category;
-	
+
 	@Autowired
-	
+
 	private UserDAO userDAO;
-	
+
 	@Autowired
-	
+
 	private CartItemDAO cartItemDAO;
-	
+
 	@Autowired
-	
+
 	private CartDAO cartDAO;
-	
+
 	@Autowired
-	
+
 	HttpSession session;
 
 	@ModelAttribute
@@ -96,22 +100,22 @@ public class ProductController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/addprod", method = RequestMethod.POST)
+	public String addprod(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model,
+			HttpServletRequest request) throws IOException {
+		model.addAttribute("product", new Product());
 
-	@RequestMapping(value="/addprod",method=RequestMethod.POST)
-	public String addprod(@Valid @ModelAttribute("product")Product product, BindingResult result, Model model,HttpServletRequest request) throws IOException
-	{
-		model.addAttribute("product",new Product());
-		
 		System.out.println(product.getProdname());
 		System.out.println("image uploaded");
 		System.out.println("myproduct controller called");
 		MultipartFile image = product.getImg();
-		
+
 		Path path;
-		path = Paths.get("C:/Users/user/newgit/watchesfrontend/src/main/webapp/images/" + product.getProdname() +".jpg");
+		path = Paths
+				.get("C:/Users/user/newgit/watchesfrontend/src/main/webapp/images/" + product.getProdname() + ".jpg");
 		System.out.println("Path=" + path);
 		System.out.println("File name" + product.getImg().getOriginalFilename());
-		
+
 		if (image != null && !image.isEmpty()) {
 			try {
 				image.transferTo(new File(path.toString()));
@@ -122,20 +126,17 @@ public class ProductController {
 			}
 		}
 
-		if(product.getProdid()==0)
-		{
+		if (product.getProdid() == 0) {
 			productDAO.saveorUpdate(product);
 			System.out.println("product added");
-		}
-		else
-		{
+		} else {
 			productDAO.saveorUpdate(product);
 			System.out.println("product updated");
 			return "AddProducts";
 		}
-		
-		HttpSession session=request.getSession(false);
-		String username=(String)session.getAttribute("LoggedInUser");
+
+		HttpSession session = request.getSession(false);
+		String username = (String) session.getAttribute("LoggedInUser");
 		model.addAttribute("message", "product added successfully");
 		model.addAttribute("productList", productDAO.list());
 		model.addAttribute("categoryList", categoryDAO.list());
@@ -143,7 +144,6 @@ public class ProductController {
 
 		return "redirect:/AddProducts";
 	}
-
 
 	@RequestMapping(value = "/editproducts{id}")
 	public ModelAndView updateProduct(@PathVariable("id") String id, Model model) {
@@ -164,31 +164,28 @@ public class ProductController {
 		mv.addObject("AddProducts", 0);
 		return mv;
 	}
-	
+
 	@RequestMapping("/Products")
-	public String showDetails(Model mp)
-	{
+	public String showDetails(Model mp) {
 		return "Products";
 	}
 
-	/*@RequestMapping("/catproducts")
-	public @ResponseBody List<Product> allProducts(@PathVariable int id)
-	{
-		
-		return productDAO.getCatProducts(id);
-	}*/
-	
+	/*
+	 * @RequestMapping("/catproducts") public @ResponseBody List<Product>
+	 * allProducts(@PathVariable int id) {
+	 * 
+	 * return productDAO.getCatProducts(id); }
+	 */
+
 	@RequestMapping("/{id}/ViewDetails")
-	public String showDetails(@PathVariable Integer id,ModelMap model)
-	{
-		
-model.addAttribute("product",productDAO.get(id));
-		
-		
+	public String showDetails(@PathVariable Integer id, ModelMap model) {
+
+		model.addAttribute("product", productDAO.get(id));
+
 		return "ViewDetails";
 
 	}
-	
+
 	@RequestMapping("/allproducts")
 	public @ResponseBody List<Product> productsall() {
 		System.out.println("inside products all");
@@ -197,47 +194,48 @@ model.addAttribute("product",productDAO.get(id));
 	}
 
 	@RequestMapping("/{id}/addcart")
-	public String addCart(@PathVariable Integer id,Principal principal)
-	{
-		Integer categoryid=0;
-		if(principal!=null)
-		{
-		 User user=userDAO.get(principal.getName());
-		 System.out.println(principal.getName());
-		Cart cart= user.getCart();
-		System.out.println(cart.getCartid());
-		CartItem cartItem =cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
-		System.out.println("cartItem item"+cartItem);
-		Product product=productDAO.get(id);
-		if(cartItem==null)
-		{
-		  cartItem=new CartItem();
-		  cartItem.setQty(1);;
-		  cartItem.setProduct(product);;
-		  cartItem.setGrandtotal(product.getPrice());
-		  cartItem.setCart(cart);
-		  cartItemDAO.addCartItem(cartItem);
-		  cart.setGrandtotal(cart.getGrandtotal()+product.getPrice());
-		  cart.setQty(cart.getQty()+1);
-		  cartDAO.updateCart(cart);
-		}else
-		{
-			cartItem.setQty(cartItem.getQty()+1);
-			cartItem.setGrandtotal(cartItem.getGrandtotal()+product.getPrice());
-			cart.setGrandtotal(cart.getGrandtotal()+product.getPrice());
-			cart.setQty(cart.getQty()+1);
-			  
-			  
-			  cartDAO.updateCart(cart);
-			  cartItemDAO.updateCartItem(cartItem);
+	public String addCart(@PathVariable Integer id, Principal principal) {
+		Integer categoryid = 0;
+		if (principal != null) {
+			User user = userDAO.get(principal.getName());
+			System.out.println(principal.getName());
+			// Cart cart= user.getCart();
+			// System.out.println(cart.getCartid());
+			CartItem cartItem = cartItemDAO.getExistingCartItemCount(id, 1);
+			System.out.println("cartItem item" + cartItem.getCart().getCartid());
+			Product product = productDAO.get(id);
+			if (cartItem == null) {
+				System.out.println("inside if");
+				cartItem = new CartItem();
+				cartItem.setQty(1);
+				cartItem.setProduct(product);
+				cartItem.setGrandtotal(product.getPrice());
+				cartItem.setCart(cart);
+				cartItemDAO.addCartItem(cartItem);
+				cart.setGrandtotal(cart.getGrandtotal() + product.getPrice());
+				cart.setQty(cart.getQty() + 1);
+				cartDAO.updateCart(cart);
+			} 
+			else 
+			{
+				System.out.println("inside else");
+				cartItem.setQty(cartItem.getQty() + 1);
+				System.out.println(cartItem.getQty() + 1);
+				cartItem.setGrandtotal(cartItem.getGrandtotal() + product.getPrice());
+				System.out.println(cartItem.getGrandtotal() + product.getPrice());
+				cart.setGrandtotal(cart.getGrandtotal() + product.getPrice());
+				System.out.println(cart.getGrandtotal() + product.getPrice());
+				cart.setQty(cart.getQty() + 1);
+				System.out.println(cart.getQty() + 1);
+
+				cartDAO.updateCart(cart);
+				cartItemDAO.updateCartItem(cartItem);
+			}
+
+			session.setAttribute("cartcount", cart.getQty());
 		}
-		
-		 session.setAttribute("cartcount",cart.getQty());  
-		}
-		
+
 		return "redirect:/Products";
 	}
 
 }
-
-
