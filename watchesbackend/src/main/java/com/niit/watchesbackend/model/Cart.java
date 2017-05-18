@@ -21,15 +21,15 @@ import org.springframework.stereotype.Component;
 public class Cart implements java.io.Serializable{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int cartid;
 	private int qty;
 	private int grandtotal;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
 	private User user;
 	
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<CartItem> cartitems=new ArrayList<CartItem>();
 	
 	public int getCartid() {

@@ -29,20 +29,20 @@ public class CartDAOImpl implements CartDAO {
 
 	@Override
 	public boolean addCart(Cart cart) {
-		Session s=sessionFactory.openSession();
+		Session s=sessionFactory.getCurrentSession();
 		Transaction tx=s.beginTransaction();
 		s.save(cart);
 		tx.commit();
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean updateCart(Cart cart) {
 		try
 		{
-			Session session;
-			System.out.println("updating cart with id"+cart.getCartid());
-			Session s=sessionFactory.openSession();
+			
+			System.out.println("updating cart with id : " + cart.getCartid());
+			Session s=sessionFactory.getCurrentSession();
 			Transaction tx=s.beginTransaction();
 			s.update(cart);
 			tx.commit();
@@ -66,7 +66,7 @@ public class CartDAOImpl implements CartDAO {
 		q.setParameter("id", id);
 		int i=q.executeUpdate();
 		System.out.println("updated cart i value"+i);
-		return false;
+		return true;
 	}
 
 	@Override

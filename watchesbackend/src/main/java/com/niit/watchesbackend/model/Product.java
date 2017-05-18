@@ -41,11 +41,11 @@ public class Product {
 	@Column(name="supid")
 	private int supid;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="categoryid",insertable=false,updatable=false)
 	private Category category;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="supid",insertable=false,updatable=false)
 	private Supplier supplier;
 	

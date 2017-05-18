@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
 	
 
 	public boolean saveorUpdate(User user) {
-		Session s=sessionFactory.getCurrentSession();
+		Session s=sessionFactory.openSession();
 		Transaction tx=s.beginTransaction();
 		s.saveOrUpdate(user);
 		tx.commit();
@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public boolean delete(User user) {
 		
-		Session s = sessionFactory.getCurrentSession();
+		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		System.out.println("deletion");
 		s.delete(user);
@@ -51,10 +51,10 @@ public class UserDAOImpl implements UserDAO {
 
 	//@Override
 	public User get(String id) {
-		Session s=sessionFactory.getCurrentSession();
+		Session s=sessionFactory.openSession();
 		Transaction tx=s.beginTransaction();
 		String str="from User where emailid='"+id+"'";
-		Query query=sessionFactory.getCurrentSession().createQuery(str);
+		Query query=sessionFactory.openSession().createQuery(str);
 		List<User> list=query.list();
 		if(list!=null && list.isEmpty())
 		{

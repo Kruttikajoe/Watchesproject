@@ -32,7 +32,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public boolean saveorUpdate(Supplier supplier) {
 
-		Session s = sessionFactory.getCurrentSession();
+		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		s.saveOrUpdate(supplier);
 		tx.commit();
@@ -44,7 +44,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 		try
 		{
 		
-		Session s = sessionFactory.getCurrentSession();
+		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		System.out.println("deletion");
 		s.delete(supplier);
@@ -66,7 +66,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 
 	public Supplier get(int id) {
 		String hql=" from Supplier where supid="+id;
-		Session s = sessionFactory.getCurrentSession();
+		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		Query query=s.createQuery(hql);
 		List<Supplier> list= query.list();

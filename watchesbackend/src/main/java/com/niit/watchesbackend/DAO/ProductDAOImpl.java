@@ -35,7 +35,7 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 
 	public boolean saveorUpdate(Product product) {
-		Session s=sessionFactory.getCurrentSession();
+		Session s=sessionFactory.openSession();
 		Transaction tx=s.beginTransaction();
 		s.saveOrUpdate(product);
 		tx.commit();
@@ -44,7 +44,7 @@ public class ProductDAOImpl implements ProductDAO {
 	
 public boolean delete(Product product) {
 		
-		Session s = sessionFactory.getCurrentSession();
+		Session s = sessionFactory.openSession();
 		Transaction tx = s.beginTransaction();
 		System.out.println("deletion");
 		s.delete(product);
@@ -56,7 +56,7 @@ public boolean delete(Product product) {
 @Override
 public Product get(int id) {
 	String hql=" from Product where prodid="+id;
-	Session s = sessionFactory.getCurrentSession();
+	Session s = sessionFactory.openSession();
 	Transaction tx = s.beginTransaction();
 	Query query=s.createQuery(hql);
 	List<Product> list= query.list();
