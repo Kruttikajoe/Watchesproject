@@ -142,7 +142,7 @@ public class ProductController {
 		model.addAttribute("categoryList", categoryDAO.list());
 		model.addAttribute("supplierList", supplierDAO.list());
 
-		return "redirect:/AddProducts";
+		return "AddProducts";
 	}
 
 	@RequestMapping(value = "/editproducts{id}")
@@ -195,38 +195,41 @@ public class ProductController {
 
 	@RequestMapping("/{id}/addcart")
 	public String addCart(@PathVariable Integer id, Principal principal) {
-		Integer categoryid = 0;
+		
+		System.out.println("id in addcart" + id);
+		Product product=productDAO.get(id);
 		if (principal != null) {
 			User user = userDAO.get(principal.getName());
 			System.out.println(principal.getName());
-			// Cart cart= user.getCart();
-			// System.out.println(cart.getCartid());
-			CartItem cartItem = cartItemDAO.getExistingCartItemCount(id, 1);
-			System.out.println("cartItem item" + cartItem.getCart().getCartid());
-			Product product = productDAO.get(id);
-			if (cartItem == null) {
+			System.out.println(user);
+
+			Cart cart = user.getCart();
+			System.out.println(cart.getCartid());
+			if (cart == null) {
 				System.out.println("inside if");
-				cartItem = new CartItem();
+				cart = new Cart();
+				cart.setQty(1);
+				cart.setGrandtotal(product.getPrice());
+				cart.setUsers(user);
+				CartItem cartItem = new CartItem();
 				cartItem.setQty(1);
 				cartItem.setProduct(product);
 				cartItem.setGrandtotal(product.getPrice());
 				cartItem.setCart(cart);
 				cartItemDAO.addCartItem(cartItem);
-				cart.setGrandtotal(cart.getGrandtotal() + product.getPrice());
-				cart.setQty(cart.getQty() + 1);
-				cartDAO.updateCart(cart);
-			} 
-			else 
-			{
+				cartDAO.addCart(cart);
+			} else {
 				System.out.println("inside else");
+				CartItem cartItem = cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
+				System.out.println("cartItem item" + cartItem);
 				cartItem.setQty(cartItem.getQty() + 1);
-				System.out.println(cartItem.getQty() + 1);
+				System.out.println("cart item quantity"+cartItem.getQty() + 1);
 				cartItem.setGrandtotal(cartItem.getGrandtotal() + product.getPrice());
-				System.out.println(cartItem.getGrandtotal() + product.getPrice());
+				System.out.println("cartitem grandtotal plus price"+cartItem.getGrandtotal() + product.getPrice());
 				cart.setGrandtotal(cart.getGrandtotal() + product.getPrice());
-				System.out.println(cart.getGrandtotal() + product.getPrice());
+				System.out.println("cart grandtotal plus product price"+cart.getGrandtotal() + product.getPrice());
 				cart.setQty(cart.getQty() + 1);
-				System.out.println(cart.getQty() + 1);
+				System.out.println("cart quantity"+cart.getQty() + 1);
 
 				cartDAO.updateCart(cart);
 				cartItemDAO.updateCartItem(cartItem);
@@ -235,7 +238,7 @@ public class ProductController {
 			session.setAttribute("cartcount", cart.getQty());
 		}
 
-		return "redirect:/Products";
+		return "Products";
 	}
 
 }

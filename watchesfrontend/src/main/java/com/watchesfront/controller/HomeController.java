@@ -119,7 +119,7 @@ public class HomeController {
 	@RequestMapping("/perform_logout")
 	public ModelAndView showLogout(HttpServletRequest request,HttpSession session)
 	{
-		ModelAndView mv=new ModelAndView("index");
+		ModelAndView mv=new ModelAndView("Home");
 		session.setAttribute("logoutMessage", "You have successfully logged out");
 		session.setAttribute("loggedOut", "true");
 		session.invalidate();
