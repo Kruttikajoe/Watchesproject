@@ -23,7 +23,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	@Override
 	public boolean addCartItem(CartItem cartItem) {
 		try {
-			Session s = sessionFactory.getCurrentSession();
+			Session s = sessionFactory.openSession();
 			Transaction tx = s.beginTransaction();
 			s.save(cartItem);
 			return true;
@@ -95,7 +95,7 @@ public class CartItemDAOImpl implements CartItemDAO {
 	@Override
 	public boolean updateCartItem(CartItem cartItem) {
 		try {
-			Session s = sessionFactory.getCurrentSession();
+			Session s = sessionFactory.openSession();
 			Transaction tx = s.beginTransaction();
 			s.update(cartItem);
 			tx.commit();
