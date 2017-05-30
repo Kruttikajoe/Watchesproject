@@ -24,78 +24,57 @@ import com.niit.watchesbackend.model.Category;
 public class CategoryController {
 	@Autowired
 	private CategoryDAO categoryDAO;
-	
+
 	@Autowired
-	
+
 	private Category category;
-	
-	
-	
+
 	@ModelAttribute
-	
-	public Category returnObject()
-	{
+
+	public Category returnObject() {
 		return new Category();
 	}
-	
+
 	@RequestMapping("/AddCategory")
-	public ModelAndView showCategory()
-	{
-		ModelAndView mv= new ModelAndView("AddCategory");
+	public ModelAndView showCategory() {
+		ModelAndView mv = new ModelAndView("AddCategory");
 		mv.addObject("categoryList", categoryDAO.list());
 		return mv;
 	}
-	
-	@RequestMapping(value="/addcat",method=RequestMethod.POST)
-	
-	public String addcat(@Valid @ModelAttribute("category")Category category, BindingResult result, Model model,HttpServletRequest request) throws IOException
-	{
-	model.addAttribute("category",new Category());
-		if(category.getCategoryid()==0)
-		{
-			categoryDAO.saveorUpdate(category);
+
+	@RequestMapping(value = "/addcat", method = RequestMethod.POST)
+
+	public String addcat(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model,
+			HttpServletRequest request) throws IOException {
+		model.addAttribute("category", new Category());
+		if (category.getCategoryid() == 0) {
+			categoryDAO.saveOrUpdate(category);
 			System.out.println("category added");
-		}
-		else
-		{
-			categoryDAO.saveorUpdate(category);
+		} else {
+			categoryDAO.saveOrUpdate(category);
 			System.out.println("category updated");
 		}
 		return "redirect:/AddCategory";
 	}
-	
-	
-	@RequestMapping(value="/editcategory{id}")
-	public ModelAndView updateCategory(@PathVariable("id")String id,Model model)
-	{
-	int i=Integer.parseInt(id);
-	model.addAttribute("category", categoryDAO.get(i));
-	model.addAttribute("categoryList", categoryDAO.list());
-	ModelAndView mv=new ModelAndView("AddCategory");
-	return mv;
-	}
-	
-	
-	@RequestMapping(value="/deletecategory{id}")
-	public ModelAndView deleteCategory(@PathVariable("id")String id,Model model)
-	{
-	int i=Integer.parseInt(id);
-	category= categoryDAO.get(i);
-	categoryDAO.delete(category);
-	model.addAttribute("categoryList", categoryDAO.list());
-	ModelAndView mv=new ModelAndView("AddCategory");
-	mv.addObject("AddCategory", 0);
-	return mv;
-	}
-	
 
+	@RequestMapping(value = "/editcategory{id}")
+	public ModelAndView updateCategory(@PathVariable("id") String id, Model model) {
+		int i = Integer.parseInt(id);
+		model.addAttribute("category", categoryDAO.get(i));
+		model.addAttribute("categoryList", categoryDAO.list());
+		ModelAndView mv = new ModelAndView("AddCategory");
+		return mv;
+	}
 
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value = "/deletecategory{id}")
+	public ModelAndView deleteCategory(@PathVariable("id") String id, Model model) {
+		int i = Integer.parseInt(id);
+		category = categoryDAO.get(i);
+		categoryDAO.delete(category);
+		model.addAttribute("categoryList", categoryDAO.list());
+		ModelAndView mv = new ModelAndView("AddCategory");
+		mv.addObject("AddCategory", 0);
+		return mv;
+	}
 
 }

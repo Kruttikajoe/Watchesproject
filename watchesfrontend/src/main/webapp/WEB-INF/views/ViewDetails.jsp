@@ -6,7 +6,8 @@
 		<div class="col-sm-6">
 			<div class="col-sm-6">
 				<div class="thumbnail">
-					<img src="/watchesfrontend/images/${product.prodname}.jpg" alt="product image">
+					<img src="/watchesfrontend/images/${product.prodname}.jpg"
+						alt="product image">
 
 				</div>
 
@@ -14,22 +15,23 @@
 			<div class="col-sm-6">
 				<table class="table table-responsive">
 					<tr>
-					<td>Product Name</td>
-					<td>${product.prodname}</td>
-					
+						<td>Product Name</td>
+						<td>${product.prodname}</td>
+
 					</tr>
 					<tr>
-					<td>Product Price</td>
-					<td>${product.price}</td>
+						<td>Product Price</td>
+						<td>${product.price}</td>
 					</tr>
 					<tr>
-					<td>Product quantity</td>
-					<td>${product.qty}</td>
+						<td>Product quantity</td>
+						<td>${product.qty}</td>
 					</tr>
 
-	<tr>
-	<td><a href="addcart"><input type ="submit" value="AddtoCart"/></a></td>
-	</tr>
+					<tr>
+						<td><a href="addcart"><input type="submit"
+								value="AddtoCart" /></a></td>
+					</tr>
 
 
 

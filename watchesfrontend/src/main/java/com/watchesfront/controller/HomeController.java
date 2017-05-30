@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.niit.watchesbackend.DAO.CartDAO;
 import com.niit.watchesbackend.DAO.CategoryDAO;
 import com.niit.watchesbackend.DAO.UserDAO;
 import com.niit.watchesbackend.model.Category;
@@ -29,13 +31,25 @@ import com.niit.watchesbackend.model.User;
 public class HomeController {
 	
 	@Autowired
+	CartDAO cartDAO;
+	
+	@Autowired
 	UserDAO userDAO;
 	
 	@Autowired
 	User user;
 	
+	@Autowired
+	SessionFactory sessionFactory;
+	
 	@RequestMapping("/")
 	public String showHome()
+	{
+		return "Home";
+	}
+	
+	@RequestMapping("/Home")
+	public String showHomeOnImage()
 	{
 		return "Home";
 	}
@@ -44,6 +58,26 @@ public class HomeController {
 	public ModelAndView showlogin()
 	{
 		ModelAndView mv= new ModelAndView("Login");
+		return mv;
+	}
+	
+	@RequestMapping("/Admin")
+	public String showAdminHome()
+	{
+		return "Admin";
+	}
+	
+	@RequestMapping("/Signup")
+	public ModelAndView showsignup()
+	{
+		ModelAndView mv= new ModelAndView("Signup");
+		return mv;
+	}
+	
+	@RequestMapping("/Denied")
+	public ModelAndView showDenied()
+	{
+		ModelAndView mv=new ModelAndView("Denied");
 		return mv;
 	}
 
@@ -70,18 +104,7 @@ public class HomeController {
 			return mv;
 		}
 	}
-	@RequestMapping("/Signup")
-	public ModelAndView showsignup()
-	{
-		ModelAndView mv= new ModelAndView("Signup");
-		return mv;
-	}
-	@RequestMapping("/Denied")
-	public ModelAndView showDenied()
-	{
-		ModelAndView mv=new ModelAndView("Denied");
-		return mv;
-	}
+	
 	
 	@RequestMapping(value="/login_session_attributes")
 	
@@ -98,7 +121,9 @@ public class HomeController {
 		System.out.println("x value is:"+x);
 		session.setAttribute("loggedInUserID", x);
 		session.setAttribute("LoggedIn", "true");
-		
+		model.addAttribute("mycartList", cartDAO.getCartWithUserId(x));
+
+		@SuppressWarnings("unchecked")
 		Collection<GrantedAuthority> authorities=(Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 		String role="ROLE_USER";
 		for(GrantedAuthority authority:authorities)
@@ -124,8 +149,8 @@ public class HomeController {
 		session.setAttribute("loggedOut", "true");
 		session.invalidate();
 		session=request.getSession(true);
-		//mv.addObject("logoutMessage","you have successfully logged out");
-		//mv.addObject("loggedOut","true");
+		mv.addObject("logoutMessage","you have successfully logged out");
+		mv.addObject("loggedOut","true");
 		return mv;
 	}
 	
@@ -134,6 +159,7 @@ public class HomeController {
 	{
 		return new User(); 
 	}
+	
 	 //After clicking submit this page with data is opened and is sent to addus page
 	@RequestMapping(value = "/addus", method = RequestMethod.POST)
 	public String addUser(@ModelAttribute("user") User user, BindingResult result, HttpServletRequest request)
@@ -150,7 +176,7 @@ public class HomeController {
 
 		{
 
-			userDAO.saveorUpdate(user);
+			userDAO.saveOrUpdate(user);
 
 		}
 

@@ -55,7 +55,7 @@
         </ul>
         </li>
         
-        <li> <a href="#"><span class="glyphicon glyphicon-shopping-cart">Cart</span></a>
+        <li> <a href="Cart"><span class="glyphicon glyphicon-shopping-cart">Cart</span></a>
         </li>
         
         

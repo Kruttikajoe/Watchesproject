@@ -88,6 +88,7 @@ public class ProductController {
 	@ModelAttribute
 
 	public Product returnObject() {
+		
 		return new Product();
 	}
 
@@ -127,10 +128,10 @@ public class ProductController {
 		}
 
 		if (product.getProdid() == 0) {
-			productDAO.saveorUpdate(product);
+			productDAO.saveOrUpdate(product);
 			System.out.println("product added");
 		} else {
-			productDAO.saveorUpdate(product);
+			productDAO.saveOrUpdate(product);
 			System.out.println("product updated");
 			return "AddProducts";
 		}
@@ -150,6 +151,8 @@ public class ProductController {
 		int i = Integer.parseInt(id);
 		model.addAttribute("product", productDAO.get(i));
 		model.addAttribute("productList", productDAO.list());
+		model.addAttribute("categoryList", categoryDAO.list());
+		model.addAttribute("supplierList", supplierDAO.list());
 		ModelAndView mv = new ModelAndView("AddProducts");
 		return mv;
 	}
@@ -170,13 +173,6 @@ public class ProductController {
 		return "Products";
 	}
 
-	/*
-	 * @RequestMapping("/catproducts") public @ResponseBody List<Product>
-	 * allProducts(@PathVariable int id) {
-	 * 
-	 * return productDAO.getCatProducts(id); }
-	 */
-
 	@RequestMapping("/{id}/ViewDetails")
 	public String showDetails(@PathVariable Integer id, ModelMap model) {
 
@@ -195,50 +191,61 @@ public class ProductController {
 
 	@RequestMapping("/{id}/addcart")
 	public String addCart(@PathVariable Integer id, Principal principal) {
+		User user = userDAO.get(principal.getName());
+		user.setCpassword(user.getPassword());
+		Product product = productDAO.get(id);
+		System.out.println(product);
+		Cart cart = cartDAO.getCartWithUserId(user.getUserid());
+		System.out.println("user id is"+user.getUserid());
+		System.out.println("cart"+cart);
 		
-		System.out.println("id in addcart" + id);
-		Product product=productDAO.get(id);
-		if (principal != null) {
-			User user = userDAO.get(principal.getName());
-			System.out.println(principal.getName());
-			System.out.println(user);
-
-			Cart cart = user.getCart();
-			System.out.println(cart.getCartid());
-			if (cart == null) {
-				System.out.println("inside if");
-				cart = new Cart();
-				cart.setQty(1);
-				cart.setGrandtotal(product.getPrice());
-				cart.setUsers(user);
-				CartItem cartItem = new CartItem();
-				cartItem.setQty(1);
-				cartItem.setProduct(product);
-				cartItem.setGrandtotal(product.getPrice());
-				cartItem.setCart(cart);
-				cartItemDAO.addCartItem(cartItem);
-				cartDAO.addCart(cart);
-			} else {
-				System.out.println("inside else");
-				CartItem cartItem = cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
-				System.out.println("cartItem item" + cartItem);
-				cartItem.setQty(cartItem.getQty() + 1);
-				System.out.println("cart item quantity"+cartItem.getQty() + 1);
-				cartItem.setGrandtotal(cartItem.getGrandtotal() + product.getPrice());
-				System.out.println("cartitem grandtotal plus price"+cartItem.getGrandtotal() + product.getPrice());
-				cart.setGrandtotal(cart.getGrandtotal() + product.getPrice());
-				System.out.println("cart grandtotal plus product price"+cart.getGrandtotal() + product.getPrice());
-				cart.setQty(cart.getQty() + 1);
-				System.out.println("cart quantity"+cart.getQty() + 1);
-
-				cartDAO.updateCart(cart);
-				cartItemDAO.updateCartItem(cartItem);
-			}
-
-			session.setAttribute("cartcount", cart.getQty());
-		}
-
-		return "Products";
-	}
+		if(cart!=null)
+	     {
+			System.out.println("Cart is not null and can be updated");
+	    	 cart.setUser(user);
+	    		
+	    	CartItem cartItem=cartItemDAO.getExistingCartItemCount(id, cart.getCartid());
+	    	if(cartItem!=null)
+	    	{
+	    		cartItem.setCart(cart);
+	    		cartItem.setGrandtotal(cartItem.getGrandtotal()+product.getPrice());
+	    		cartItem.setQty(cartItem.getQty()+1);
+	    		cartItemDAO.updateCartItem(cartItem);
+	    	}
+	    	else{
+	    		cartItem=new CartItem();
+	    		cartItem.setCart(cart);
+	    		cartItem.setGrandtotal(product.getPrice());
+	    		cartItem.setProduct(product);
+	    		cartItem.setQty(1);
+	    		cartItemDAO.addCartItem(cartItem);
+	    	}
+	    	cart.setGrandtotal(cart.getGrandtotal()+product.getPrice());
+	    	cart.setQty(cart.getQty()+1);
+	    	List<CartItem> cartItems=cart.getCartitems();
+	    	cartItems.add(cartItem);
+	    	cart.setCartitems(cartItems);
+	    	cartDAO.updateCart(cart);
+	    	
+	     }else
+	     {
+	    	 System.out.println("Cart is null and is ready to be created");
+	    	 cart=new Cart();
+	    	 cart.setGrandtotal(product.getPrice());
+	    	 cart.setQty(1);
+	    	 cart.setUser(user);
+	    	 CartItem cartItem=new CartItem();
+	    	 cartItem.setCart(cart);
+	    	 cartItem.setGrandtotal(product.getPrice());
+	    	 cartItem.setProduct(product);
+	    	 cartItem.setQty(1);
+	    	 
+	    	 cartDAO.addCart(cart);
+	    	 cartItemDAO.addCartItem(cartItem);
+	     }
+	     
+	     //model.addAttribute("mycartList", cartItemDAO.getAll(id));
+	return "Cart";
+}
 
 }
