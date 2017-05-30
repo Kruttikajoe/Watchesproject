@@ -2,106 +2,125 @@ package com.niit.watchesbackend.DAO;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.watchesbackend.model.CartItem;
 
 @Repository("cartitemDAO")
-@Transactional
+@EnableTransactionManagement
 
 public class CartItemDAOImpl implements CartItemDAO {
 
 	@Autowired
 	SessionFactory sessionFactory;
+	
+	public CartItemDAOImpl(SessionFactory sessionFactory) {
+		super();
+		this.sessionFactory = sessionFactory;
+	}
+
+	public CartItemDAOImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
+	@Transactional
 	public boolean addCartItem(CartItem cartItem) {
-		try {
-			Session s = sessionFactory.openSession();
-			Transaction tx = s.beginTransaction();
-			s.save(cartItem);
+		try
+		{
+			sessionFactory.getCurrentSession().save(cartItem);
+			System.out.println("addCartItem successful");
 			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception in addCartItem");
 			System.out.println(e);
 			return false;
 		}
 	}
-
+	
 	@Override
+	@Transactional
 	public List<CartItem> getAll(int id) {
-		Session s = sessionFactory.openSession();
-		Transaction tx = s.beginTransaction();
-		Query query = s.createQuery("FROM CartItem where cart_cartid=:id");
-		query.setParameter("id", id);
-		tx.commit();
-		return query.list();
+		try{
+			return sessionFactory.getCurrentSession().createQuery("from CartItem", CartItem.class).getResultList();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteCartItem(CartItem cartItem) {
-		try {
+		try{
 			sessionFactory.openSession().delete(cartItem);
 			return true;
-
-		} catch (Exception e) {
+			
+		}catch(Exception e)
+		{
 			System.out.println(e);
 			return false;
 		}
 	}
 
 	@Override
+	@Transactional
 	public CartItem getCartItem(int id) {
-		return (CartItem) sessionFactory.openSession().get(CartItem.class, id);
-	}
-
-	@Override
-	public boolean deleteAll(int cart_id) {
-		try {
-			Query q = sessionFactory.openSession().createQuery("delete from CartItem where cart_cartid=:id");
-			q.setParameter("id", cart_id);
-			q.executeUpdate();
-			return true;
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
+		try{
+			return sessionFactory.getCurrentSession().createQuery("from CartItem where cartitemid=:id", CartItem.class).setParameter("id", id).getSingleResult();
 		}
-
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
 	}
 
 	@Override
-	public CartItem getExistingCartItemCount(int productid, int cart_id) {
-		Query q = sessionFactory.openSession()
-				.createQuery("from CartItem where cart_cartid=:cartid and product_prodid=:productid");
-		q.setParameter("cartid", cart_id);
-		q.setParameter("productid", productid);
+	@Transactional
+	public boolean deleteAll(int cart_id) {
+		try
+		{
+		return true;
+		}
+		catch(Exception e){
+			System.out.println(e);
+		return false;
+		}
+	}
 
-		try {
-
-			return (CartItem) q.uniqueResult();
-
-		} catch (Exception e) {
+	@Override
+	@Transactional
+	public CartItem getExistingCartItemCount(int product_id, int cart_id) {
+		try{
+		return sessionFactory.getCurrentSession().createQuery("from CartItem where cart_cartid=:cartid and product_prodid=:productid",CartItem.class)
+				.setParameter("cartid", cart_id).setParameter("productid", product_id).getSingleResult();
+		}catch(Exception e)
+		{
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	@Override
+	@Transactional
 	public boolean updateCartItem(CartItem cartItem) {
-		try {
-			Session s = sessionFactory.openSession();
-			Transaction tx = s.beginTransaction();
-			s.update(cartItem);
-			tx.commit();
+		try
+		{
+			sessionFactory.getCurrentSession().update(cartItem);
 			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
+		}
+		catch(Exception e)
+		{
 			System.out.println(e);
 			return false;
 		}

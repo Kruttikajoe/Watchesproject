@@ -8,11 +8,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.watchesbackend.model.Supplier;
 
-@Repository(value="supplierDAO")
+@Repository(value = "supplierDAO")
+@EnableTransactionManagement
 
 public class SupplierDAOImpl implements SupplierDAO {
 
@@ -30,80 +32,61 @@ public class SupplierDAOImpl implements SupplierDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public boolean saveorUpdate(Supplier supplier) {
-
-		Session s = sessionFactory.openSession();
-		Transaction tx = s.beginTransaction();
-		s.saveOrUpdate(supplier);
-		tx.commit();
-		return true;
-	}
-	
-	public boolean delete(Supplier supplier) {
-
-		try
-		{
-		
-		Session s = sessionFactory.openSession();
-		Transaction tx = s.beginTransaction();
-		System.out.println("deletion");
-		s.delete(supplier);
-		System.out.println("check");
-		tx.commit();
-		return true;
-		}
-		
-		catch(Exception e)
+	@Transactional
+	public boolean saveOrUpdate(Supplier supplier) {
+		try{
+			sessionFactory.getCurrentSession().saveOrUpdate(supplier);
+			return true;
+			
+		}catch(Exception e)
 		{
 			System.out.println(e);
 			return false;
 		}
-		
-		
-	} 
-	
-	@Override
+	}
 
-	public Supplier get(int id) {
-		String hql=" from Supplier where supid="+id;
-		Session s = sessionFactory.openSession();
-		Transaction tx = s.beginTransaction();
-		Query query=s.createQuery(hql);
-		List<Supplier> list= query.list();
-		tx.commit();
-		if(list==null || list.isEmpty())
+	@Override
+	@Transactional
+	public boolean delete(Supplier supplier) {
+		
+		try{
+			sessionFactory.getCurrentSession().delete(supplier);
+			return true;
+			
+		}catch(Exception e)
 		{
-			System.out.println("No products are available with this id"+id);
+			System.out.println(e);
+			return false;
+		}
+	}
+
+
+	@Override
+	@Transactional
+	public Supplier get(int id) {
+		try{
+			return sessionFactory.getCurrentSession().createQuery("from Supplier where supid=:id", Supplier.class).setParameter("id", id).getSingleResult();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
 			return null;
 		}
-		else
-		{
-			return list.get(0);
-		}
-		
 	}
-	
+
 	@Override
 	@Transactional
 	public List<Supplier> list() {
-		Session s=sessionFactory.openSession();
-		Transaction tx = s.beginTransaction();
-		String hql="from Supplier";
-		Query query=s.createQuery(hql);
-		System.out.println("Starting of the method list");
-		List<Supplier> list=query.list();
-		if(list==null || list.isEmpty())
-		{
-			System.out.println("No suppliers available");
-		
+		try{
+			return sessionFactory.getCurrentSession().createQuery("from Supplier", Supplier.class).getResultList();
 		}
-		
-		tx.commit();
-		return query.list();
-		
-		
-		
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return null;
+		}
 	}
-
+	
+	
 
 }

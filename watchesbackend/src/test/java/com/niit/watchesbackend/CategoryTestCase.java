@@ -37,7 +37,7 @@ public class CategoryTestCase {
 	public void test() {
 		category.setCategoryname("rado watches");
 		category.setCdescription("watches");
-		boolean b=categoryDAO.saveorUpdate(category);
+		boolean b=categoryDAO.saveOrUpdate(category);
 		assertEquals("saved",true,b);
 	}
 

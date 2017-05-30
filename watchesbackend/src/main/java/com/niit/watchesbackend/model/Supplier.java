@@ -17,10 +17,13 @@ public class Supplier {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int supid;
+	
 	@NotNull(message ="supname cannot be blank")
 	private String supname;
+	
 	@NotNull(message ="supaddress cannot be blank")
 	private String supaddress;
+	
 	public int getSupid() {
 		return supid;
 	}

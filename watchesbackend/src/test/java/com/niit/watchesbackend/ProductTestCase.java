@@ -36,7 +36,7 @@ public class ProductTestCase {
 		product.setQty(2);
 		product.setWeight(2);
 		product.setProdname("rado");
-		boolean b=productDAO.saveorUpdate(product);
+		boolean b=productDAO.saveOrUpdate(product);
 		assertEquals("saved",true,b);
 	}
 

@@ -1,5 +1,6 @@
 package com.niit.watchesbackend.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,10 +19,13 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int categoryid;
-	@NotNull(message ="categoryname cannot be blank")
+	
+	@Column(nullable = false)	
 	private String categoryname;
-	@NotNull(message ="cdescription cannot be blank")
+	
+	@Column(nullable = false)
 	private String cdescription;
+	
 	public int getCategoryid() {
 		return categoryid;
 	}

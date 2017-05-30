@@ -25,27 +25,33 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int prodid;
+	
 	@NotNull(message ="prodname cannot be blank")
 	private String prodname;
+	
 	@Min(1)
 	private int qty;
+	
 	@Min(1)
 	private int price;
+	
 	@Min(1)
 	private int weight;
+	
 	@Transient
 	private MultipartFile img;
 	
 	@Column(name="categoryid")
 	private int categoryid;
+	
 	@Column(name="supid")
 	private int supid;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="categoryid",insertable=false,updatable=false)
 	private Category category;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	@JoinColumn(name="supid",insertable=false,updatable=false)
 	private Supplier supplier;
 	

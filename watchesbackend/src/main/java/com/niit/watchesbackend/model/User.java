@@ -20,21 +20,27 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userid;
+	
 	@NotNull(message = "username cannot be blank")
 	private String username;
+	
 	@NotNull(message = "password cannot be blank")
 	private String password;
 	
-
-	@NotNull(message = "address cannot be blank")
+    @NotNull(message = "address cannot be blank")
 	private String address;
+    
 	@NotNull(message = "emailid cannot be blank")
 	private String emailid;
+	
 	@NotNull(message = "phno cannot be blank")
 	private String phno;
+	
 	@NotNull(message = "role cannot be blank")
 	private String role;
+	
 	private String enabled;
+	
 	@Transient 
 	@NotNull(message = "confirm password cannot be blank")
 	private String cpassword;

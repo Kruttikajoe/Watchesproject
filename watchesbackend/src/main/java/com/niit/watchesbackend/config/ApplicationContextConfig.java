@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.watchesbackend.DAO.CartDAO;
@@ -55,7 +55,7 @@ private Properties getHibernateProperties()
 	prop.put("hibernate.show_sql","true");
 	prop.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 	prop.put("hibernate.hbm2ddl.auto", "update");
-	prop.put("hibernate.current_session_context_class", "thread");
+	//prop.put("hibernate.current_session_context_class","thread");
 	System.out.println("Hibernate Properties");
 	return prop;
 }

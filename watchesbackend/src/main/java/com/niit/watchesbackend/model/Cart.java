@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Table(name="cart")
 @Component
 
-public class Cart implements java.io.Serializable{
+public class Cart{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -26,10 +27,16 @@ public class Cart implements java.io.Serializable{
 	private int qty;
 	private int grandtotal;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private User user;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@OneToMany(cascade=CascadeType.PERSIST, mappedBy="cart", fetch=FetchType.EAGER)
 	private List<CartItem> cartitems=new ArrayList<CartItem>();
 	
 	public int getCartid() {
@@ -50,12 +57,7 @@ public class Cart implements java.io.Serializable{
 	public void setGrandtotal(int grandtotal) {
 		this.grandtotal = grandtotal;
 	}
-	public User getUsers() {
-		return user;
-	}
-	public void setUsers(User users) {
-		this.user = user;
-	}
+	
 	public List<CartItem> getCartitems() {
 		return cartitems;
 	}
