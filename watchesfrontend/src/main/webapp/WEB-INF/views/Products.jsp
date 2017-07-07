@@ -3,8 +3,8 @@
 <script>
 
 $(document).ready(function(){
-<<<<<<< HEAD
-	 var path="http://localhost:8065/Watches/images/";
+
+	 var path="http://localhost:8036/Watches/images/";
 	 
  $("#producttable").DataTable({
 	
@@ -31,14 +31,14 @@ $(document).ready(function(){
          
          {"data":"prodid",
        	  "render":function(data,type,row){
-       		  return "<a href='http://localhost:8065/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
-=======
+       		  return "<a href='http://localhost:8036/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
+
 	 var path="http://localhost:8098/Watches/images/";
 	 
  $("#producttable").DataTable({
 	
 	  "ajax": {
-		    "url": "http://localhost:8098/watchesfrontend/allproducts",
+		    "url": "http://localhost:8036/watchesfrontend/allproducts",
 		    "dataSrc": ""
 		  },
 	  "columns": [
@@ -60,8 +60,8 @@ $(document).ready(function(){
          
          {"data":"prodid",
        	  "render":function(data,type,row){
-       		  return "<a href='http://localhost:8098/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
->>>>>>> refs/remotes/origin/master
+       		  return "<a href='http://localhost:8036/watchesfrontend/"+row.prodid+"/ViewDetails' class='btn btn-primary'>View</a>";
+
        	  }
          /* },
        	

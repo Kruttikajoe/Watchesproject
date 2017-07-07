@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@include file="header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -109,7 +108,6 @@
 
 </body>
 </html>
-=======
 <%@include file="header.jsp"%>
 
 <script>
@@ -189,4 +187,4 @@ $(document).ready(function(){
 </div>
 
 <%@include file="footer.jsp"%>
->>>>>>> refs/remotes/origin/master
+

@@ -34,13 +34,13 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
         <li><a href="Products">Products</a></li>
-<<<<<<< HEAD
+
         <li><a href="AboutUs">About us</a></li>
-=======
+
         <li><a href="#">Today's deals</a></li>
         <li><a href="#">Customer Service</a></li>
         <li><a href="#">About us</a></li>
->>>>>>> refs/remotes/origin/master
+
 
       </ul>
       <ul class="nav navbar-nav navbar-right">

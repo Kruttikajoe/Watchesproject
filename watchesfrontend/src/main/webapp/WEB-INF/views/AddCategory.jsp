@@ -7,8 +7,6 @@
 <head>
 <title>Add Supplier</title>
 <style>
-<<<<<<< HEAD
-<style>
 .tg {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -44,43 +42,6 @@
 .tg .tg-4eph {
 	background-color: #f9f9f9
 }
-</style>
-=======
-.tg {
-	border-collapse: collapse;
-	border-spacing: 0;
-	border-color: #D3D3D3;
-	float : center;
-}
-.tg td {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	border-color: #ccc;
-	color: #333;
-	background-color: #fff;
-}
-.tg th {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 5px;
-	border-style: solid;
-	border-width: 1px;
-	overflow: hidden;
-	word-break: normal;
-	border-color: #ccc;
-	color: blue;
-	background-color: red;
-}
-.tg .tg-4eph {
-	background-color: #f9f9f9
-}
->>>>>>> refs/remotes/origin/master
 </style>
 </head>
 

@@ -13,7 +13,7 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-<<<<<<< HEAD
+
         <img src="images/a.jpg" alt="Watch1" width="460" height="345">
       </div>
 
@@ -27,7 +27,7 @@
 
       <div class="item">
         <img src="images/z.jpg" alt="Watch5" width="460" height="345">
-=======
+
         <img src="images/11.jpg" alt="Watch1" width="460" height="345">
       </div>
 
@@ -41,7 +41,7 @@
 
       <div class="item">
         <img src="images/5.jpg" alt="Watch5" width="460" height="345">
->>>>>>> refs/remotes/origin/master
+
        
 
       </div>

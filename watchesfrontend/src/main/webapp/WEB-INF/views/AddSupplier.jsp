@@ -10,12 +10,12 @@
 .tg {
 	border-collapse: collapse;
 	border-spacing: 0;
-	border-color: #D3D3D3;
-	float : center;
+	border-color: black;
 }
 .tg td {
-	font-family: Arial, sans-serif;
+	font-family: calibri;
 	font-size: 14px;
+	font-weight: bold;
 	padding: 10px 5px;
 	border-style: solid;
 	border-width: 1px;
@@ -26,21 +26,18 @@
 	background-color: #fff;
 }
 .tg th {
-	font-family: Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
+	font-family: calibri;
+	font-size: 18px;
+	font-weight: bold;
 	padding: 10px 5px;
 	border-style: solid;
 	border-width: 1px;
 	overflow: hidden;
 	word-break: normal;
 	border-color: #ccc;
-	color: blue;
-<<<<<<< HEAD
-	background-color: skyblue;
-=======
-	background-color: red;
->>>>>>> refs/remotes/origin/master
+	color: midnightblue;
+	background-color: lightgrey;
+	text-align: center;
 }
 .tg .tg-4eph {
 	background-color: #f9f9f9
